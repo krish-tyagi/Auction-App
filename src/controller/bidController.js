@@ -97,6 +97,20 @@ const placeBid = async (req, res) => {
             amount
         });
 
+        const io = req.app.get("io");
+        
+        io.to(auctionid).emit("newBid", {
+            auctionId: auctionid,
+            bid: {
+                id: bid._id,
+                bidder: req.user._id,
+                amount: bid.amount,
+                createdAt: bid.createdAt
+            },
+            currentPrice: updatedAuction.currentPrice,
+            highestBidder: updatedAuction.highestBidder
+        });
+
         res.status(201).json({
             message: "Bid placed successfully",
             bid,
