@@ -117,6 +117,72 @@ const placeBid = async (req, res) => {
     }
 };
 
+const getMyBids = async (req, res) => {
+    try {
+        const bids = await Bid.find({
+            bidder: req.user._id
+        })
+            .populate("auction", "title currentPrice status startTime endTime")
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            message: "Your bids fetched successfully",
+            count: bids.length,
+            bids
+        });
+
+    } catch (error) {
+        console.error("Get my bids error:", error);
+        res.status(500).json({
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
+
+const getAuctionBids = async (req, res) => {
+    try {
+        const { auctionId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(auctionId)) {
+            return res.status(400).json({
+                message: "Invalid auction ID"
+            });
+        }
+
+        const auction = await Auction.findById(auctionId);
+
+        if (!auction) {
+            return res.status(404).json({
+                message: "Auction not found"
+            });
+        }
+
+        const bids = await Bid.find({
+            auction: auctionId
+        })
+            .populate("bidder", "name email")
+            .sort({ amount: -1 });
+
+        res.status(200).json({
+            message: "Auction bids fetched successfully",
+            auctionId,
+            count: bids.length,
+            bids
+        });
+
+    } catch (error) {
+        console.error("Get auction bids error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
-    placeBid
+    placeBid,
+    getMyBids,
+    getAuctionBids
 };
