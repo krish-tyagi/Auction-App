@@ -113,8 +113,8 @@ const getAuctionById = async (req, res) => {
         const { id } = req.params;
 
         const auction = await Auction.findById(id)
-            .populate("seller", "name email")
-            .populate("highestBidder", "name email");
+            .populate("seller", "firstName lastName email")
+            .populate("highestBidder", "firstName lastName email");
 
         if (!auction) {
             return res.status(404).json({

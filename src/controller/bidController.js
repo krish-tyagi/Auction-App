@@ -5,7 +5,7 @@ const Bid = require("../models/bid");
 
 const placeBid = async (req, res) => {
     try {
-        const {auctionid, amount } = req.body;
+        const { auctionid, amount } = req.body;
 
         if (amount === undefined || amount === null) {
             return res.status(400).json({
@@ -98,7 +98,7 @@ const placeBid = async (req, res) => {
         });
 
         const io = req.app.get("io");
-        
+
         io.to(auctionid).emit("newBid", {
             auctionId: auctionid,
             bid: {
@@ -175,7 +175,7 @@ const getAuctionBids = async (req, res) => {
         const bids = await Bid.find({
             auction: auctionId
         })
-            .populate("bidder", "name email")
+            .populate("bidder", "firstName lastName email")
             .sort({ amount: -1 });
 
         res.status(200).json({

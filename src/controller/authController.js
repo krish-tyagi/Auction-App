@@ -2,11 +2,11 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const generateToken = (id) => {
-  return jwt.sign(
-    { id },
-    process.env.JWT_SECRET,
-    { expiresIn: '30d' }
-  );
+    return jwt.sign(
+        { id },
+        process.env.JWT_SECRET,
+        { expiresIn: '30d' }
+    );
 };
 
 const signup = async (req, res) => {
@@ -97,13 +97,13 @@ const login = async (req, res) => {
     }
 };
 
-const getCurrentUser = async (req,res)=> {
+const getCurrentUser = async (req, res) => {
     try {
         res.status(200).json({
             user: {
                 id: req.user._id,
                 firstName: req.user.firstName,
-                lastName:req.user.lastName,
+                lastName: req.user.lastName,
                 email: req.user.email
             }
         });
