@@ -90,7 +90,7 @@ const placeBid = async (req, res) => {
                 }
             },
             {
-                new: true
+                returnDocument: 'after'
             }
         );
 
@@ -113,27 +113,40 @@ const placeBid = async (req, res) => {
             amount
         });
 
+        const bidderInfo = {
+            _id: req.user._id,
+            firstName: req.user.firstName,
+            lastName: req.user.lastName,
+            email: req.user.email
+        };
+
         const io = req.app.get("io");
 
         io.to(auctionId).emit("newBid", {
             auctionId,
             bid: {
                 id: bid._id,
-                bidder: req.user._id,
+                bidder: bidderInfo,
                 amount: bid.amount,
                 createdAt: bid.createdAt
             },
             currentPrice: updatedAuction.currentPrice,
-            highestBidder: updatedAuction.highestBidder
+            highestBidder: bidderInfo
         });
 
         res.status(201).json({
             message: "Bid placed successfully",
-            bid,
+            bid: {
+                _id: bid._id,
+                auction: bid.auction,
+                bidder: bidderInfo,
+                amount: bid.amount,
+                createdAt: bid.createdAt
+            },
             auction: {
                 id: updatedAuction._id,
                 currentPrice: updatedAuction.currentPrice,
-                highestBidder: updatedAuction.highestBidder
+                highestBidder: bidderInfo
             }
         });
 
