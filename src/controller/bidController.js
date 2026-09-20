@@ -5,7 +5,8 @@ const Bid = require("../models/bid");
 
 const placeBid = async (req, res) => {
     try {
-        const { auctionid, amount } = req.body;
+        const auctionId = req.body.auctionId || req.body.auctionid;
+        const { amount } = req.body;
 
         if (amount === undefined || amount === null) {
             return res.status(400).json({
@@ -19,13 +20,13 @@ const placeBid = async (req, res) => {
             });
         }
 
-        if (!mongoose.Types.ObjectId.isValid(auctionid)) {
+        if (!auctionId || !mongoose.Types.ObjectId.isValid(auctionId)) {
             return res.status(400).json({
                 message: "Invalid auction ID"
             });
         }
 
-        const auction = await Auction.findById(auctionid);
+        const auction = await Auction.findById(auctionId);
 
         if (!auction) {
             return res.status(404).json({
@@ -59,8 +60,15 @@ const placeBid = async (req, res) => {
             });
         }
 
-        const minimumBid =
-            auction.currentPrice + auction.minimumBidIncrement;
+        if (auction.highestBidder && auction.highestBidder.equals(req.user._id)) {
+            return res.status(400).json({
+                message: "You are already the highest bidder"
+            });
+        }
+
+        const minimumBid = !auction.highestBidder
+            ? auction.startingPrice
+            : auction.currentPrice + auction.minimumBidIncrement;
 
         if (amount < minimumBid) {
             return res.status(400).json({
@@ -70,8 +78,9 @@ const placeBid = async (req, res) => {
 
         const updatedAuction = await Auction.findOneAndUpdate(
             {
-                _id: auctionid,
+                _id: auctionId,
                 status: "active",
+                endTime: { $gt: new Date() },
                 currentPrice: auction.currentPrice
             },
             {
@@ -86,21 +95,28 @@ const placeBid = async (req, res) => {
         );
 
         if (!updatedAuction) {
+            const currentAuction = await Auction.findById(auctionId);
+            if (!currentAuction || currentAuction.status !== "active" || new Date() >= currentAuction.endTime) {
+                return res.status(400).json({
+                    message: "Auction has ended"
+                });
+            }
+
             return res.status(409).json({
                 message: "Bid rejected. Another bid was placed. Please try again."
             });
         }
 
         const bid = await Bid.create({
-            auction: auctionid,
+            auction: auctionId,
             bidder: req.user._id,
             amount
         });
 
         const io = req.app.get("io");
 
-        io.to(auctionid).emit("newBid", {
-            auctionId: auctionid,
+        io.to(auctionId).emit("newBid", {
+            auctionId,
             bid: {
                 id: bid._id,
                 bidder: req.user._id,

@@ -18,14 +18,16 @@ const authMiddleware = async (req, res, next) => {
             process.env.JWT_SECRET
         );
 
-        req.user =  await User.findById(decoded.id);
+        req.user = await User.findById(decoded.id).select("-password");
 
         if (!req.user) {
-            return res.status(401).json({ success: false, message: 'User not found for provided token' });
+            return res.status(401).json({
+                message: "User not found for provided token"
+            });
         }
 
         next();
-        
+
     } catch (error) {
         return res.status(401).json({
             message: "Invalid or expired token"

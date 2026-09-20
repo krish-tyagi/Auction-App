@@ -32,11 +32,13 @@ app.use('/api/bid',bidRoute);
 
 socketHandler(io);
 
+const PORT = process.env.PORT || 3000;
+
 connectDB()
 .then(()=>{
     startAuctionLifecycle();
-    server.listen(3000,()=>{
-        console.log('listing at port 3000');
+    server.listen(PORT,()=>{
+        console.log(`Server listening on port ${PORT}`);
     })
 })
 .catch((error) => {

@@ -3,7 +3,11 @@ const Auction = require("../models/auction");
 
 const startAuctionLifecycle = () => {
 
+    let isRunning = false;
+
     cron.schedule("*/10 * * * * *", async () => {
+        if (isRunning) return;
+        isRunning = true;
 
         try {
             const now = new Date();
@@ -21,9 +25,10 @@ const startAuctionLifecycle = () => {
                 }
             );
 
+            // Catch both active auctions and upcoming auctions whose endTime has passed
             const ended = await Auction.updateMany(
                 {
-                    status: "active",
+                    status: { $in: ["upcoming", "active"] },
                     endTime: { $lte: now }
                 },
                 {
@@ -47,6 +52,8 @@ const startAuctionLifecycle = () => {
 
         } catch (error) {
             console.error("Auction lifecycle error:", error);
+        } finally {
+            isRunning = false;
         }
     });
 
