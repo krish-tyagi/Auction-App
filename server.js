@@ -36,7 +36,7 @@ const PORT = process.env.PORT || 3000;
 
 connectDB()
 .then(()=>{
-    startAuctionLifecycle();
+    startAuctionLifecycle(io);
     server.listen(PORT,()=>{
         console.log(`Server listening on port ${PORT}`);
     })
