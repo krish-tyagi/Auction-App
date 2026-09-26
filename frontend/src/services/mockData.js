@@ -1,0 +1,188 @@
+// Initial rich sample auctions for standalone frontend operation
+export const INITIAL_MOCK_AUCTIONS = [
+  {
+    _id: 'mock_auc_1',
+    title: '1967 Shelby GT500 Fastback - Vintage Legend',
+    description: 'All-original numbers matching 428 Cobra Jet V8, Nightmist Blue finish with white Le Mans stripes. Restored to concourse condition with verified Shelby registry documentation.',
+    seller: {
+      _id: 'user_seller_1',
+      firstName: 'Eleanor',
+      lastName: 'Vance',
+      email: 'collector@bidpulse.io',
+    },
+    startingPrice: 125000,
+    currentPrice: 142000,
+    minimumBidIncrement: 2500,
+    highestBidder: {
+      _id: 'user_bidder_1',
+      firstName: 'Marcus',
+      lastName: 'Sterling',
+      email: 'marcus@bidpulse.io',
+    },
+    startTime: new Date(Date.now() - 3600 * 1000).toISOString(),
+    endTime: new Date(Date.now() + 45 * 60 * 1000).toISOString(), // Ends in 45 mins
+    status: 'active',
+    createdAt: new Date(Date.now() - 3600 * 1000).toISOString(),
+  },
+  {
+    _id: 'mock_auc_2',
+    title: 'Rolex Daytona "Paul Newman" Ref. 6239 (1969)',
+    description: 'Rare exotic tricolor stepped dial with art deco numerals and original Valjoux 722 manual-wind chronograph movement. Stainless steel with original rivet bracelet.',
+    seller: {
+      _id: 'user_seller_2',
+      firstName: 'Geneva',
+      lastName: 'Horology',
+      email: 'geneva@bidpulse.io',
+    },
+    startingPrice: 85000,
+    currentPrice: 97500,
+    minimumBidIncrement: 1500,
+    highestBidder: {
+      _id: 'user_bidder_2',
+      firstName: 'Sophia',
+      lastName: 'Chen',
+      email: 'sophia@bidpulse.io',
+    },
+    startTime: new Date(Date.now() - 1800 * 1000).toISOString(),
+    endTime: new Date(Date.now() + 15 * 60 * 1000).toISOString(), // Ends in 15 mins (urgent)
+    status: 'active',
+    createdAt: new Date(Date.now() - 1800 * 1000).toISOString(),
+  },
+  {
+    _id: 'mock_auc_3',
+    title: 'Original Banksy "Balloon Girl" Screenprint (Signed #12/150)',
+    description: 'Signed and dated by Banksy in pencil with Pest Control Certificate of Authenticity. Pristine museum-grade conservation framing.',
+    seller: {
+      _id: 'user_seller_1',
+      firstName: 'Eleanor',
+      lastName: 'Vance',
+      email: 'collector@bidpulse.io',
+    },
+    startingPrice: 45000,
+    currentPrice: 52000,
+    minimumBidIncrement: 1000,
+    highestBidder: {
+      _id: 'user_bidder_3',
+      firstName: 'Liam',
+      lastName: 'Wright',
+      email: 'liam@bidpulse.io',
+    },
+    startTime: new Date(Date.now() - 7200 * 1000).toISOString(),
+    endTime: new Date(Date.now() + 3 * 3600 * 1000).toISOString(),
+    status: 'active',
+    createdAt: new Date(Date.now() - 7200 * 1000).toISOString(),
+  },
+  {
+    _id: 'mock_auc_4',
+    title: 'Prototype Leica M3 Chrome Rangefinder (Serial #00042)',
+    description: 'Pre-production test prototype unit with dual-stroke winding mechanism and Summicron 50mm f/2 collapsible lens. Exceptional collector grade.',
+    seller: {
+      _id: 'user_seller_3',
+      firstName: 'Klaus',
+      lastName: 'Weber',
+      email: 'klaus@bidpulse.io',
+    },
+    startingPrice: 18000,
+    currentPrice: 18000,
+    minimumBidIncrement: 500,
+    highestBidder: null,
+    startTime: new Date(Date.now() + 25 * 60 * 1000).toISOString(), // Starts in 25 mins
+    endTime: new Date(Date.now() + 5 * 3600 * 1000).toISOString(),
+    status: 'upcoming',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    _id: 'mock_auc_5',
+    title: 'First Edition "Harry Potter and the Philosopher\'s Stone" (1997)',
+    description: 'One of only 500 hardback first editions printed by Bloomsbury with the iconic misprint on page 53 and "10 9 8 7 6 5 4 3 2 1" sequence.',
+    seller: {
+      _id: 'user_seller_2',
+      firstName: 'Geneva',
+      lastName: 'Horology',
+      email: 'geneva@bidpulse.io',
+    },
+    startingPrice: 32000,
+    currentPrice: 32000,
+    minimumBidIncrement: 750,
+    highestBidder: null,
+    startTime: new Date(Date.now() + 2 * 3600 * 1000).toISOString(), // Starts in 2 hours
+    endTime: new Date(Date.now() + 26 * 3600 * 1000).toISOString(),
+    status: 'upcoming',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    _id: 'mock_auc_6',
+    title: '1982 Apple Lisa 1 Computer System - Working Boot',
+    description: 'Fully working Apple Lisa with Twiggy dual-drive system, keyboard, Apple mouse, and original system diskettes.',
+    seller: {
+      _id: 'user_seller_1',
+      firstName: 'Eleanor',
+      lastName: 'Vance',
+      email: 'collector@bidpulse.io',
+    },
+    startingPrice: 22000,
+    currentPrice: 38500,
+    minimumBidIncrement: 500,
+    highestBidder: {
+      _id: 'user_bidder_1',
+      firstName: 'Marcus',
+      lastName: 'Sterling',
+      email: 'marcus@bidpulse.io',
+    },
+    startTime: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+    endTime: new Date(Date.now() - 3600 * 1000).toISOString(), // Ended
+    status: 'ended',
+    createdAt: new Date(Date.now() - 25 * 3600 * 1000).toISOString(),
+  },
+];
+
+export const INITIAL_MOCK_BIDS = {
+  mock_auc_1: [
+    {
+      _id: 'bid_1_3',
+      auction: 'mock_auc_1',
+      bidder: { _id: 'user_bidder_1', firstName: 'Marcus', lastName: 'Sterling', email: 'marcus@bidpulse.io' },
+      amount: 142000,
+      createdAt: new Date(Date.now() - 4 * 60 * 1000).toISOString(),
+    },
+    {
+      _id: 'bid_1_2',
+      auction: 'mock_auc_1',
+      bidder: { _id: 'user_bidder_2', firstName: 'Sophia', lastName: 'Chen', email: 'sophia@bidpulse.io' },
+      amount: 135000,
+      createdAt: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+    },
+    {
+      _id: 'bid_1_1',
+      auction: 'mock_auc_1',
+      bidder: { _id: 'user_bidder_3', firstName: 'Liam', lastName: 'Wright', email: 'liam@bidpulse.io' },
+      amount: 128000,
+      createdAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+    },
+  ],
+  mock_auc_2: [
+    {
+      _id: 'bid_2_2',
+      auction: 'mock_auc_2',
+      bidder: { _id: 'user_bidder_2', firstName: 'Sophia', lastName: 'Chen', email: 'sophia@bidpulse.io' },
+      amount: 97500,
+      createdAt: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    },
+    {
+      _id: 'bid_2_1',
+      auction: 'mock_auc_2',
+      bidder: { _id: 'user_bidder_1', firstName: 'Marcus', lastName: 'Sterling', email: 'marcus@bidpulse.io' },
+      amount: 90000,
+      createdAt: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
+    },
+  ],
+  mock_auc_3: [
+    {
+      _id: 'bid_3_1',
+      auction: 'mock_auc_3',
+      bidder: { _id: 'user_bidder_3', firstName: 'Liam', lastName: 'Wright', email: 'liam@bidpulse.io' },
+      amount: 52000,
+      createdAt: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
+    },
+  ],
+};
